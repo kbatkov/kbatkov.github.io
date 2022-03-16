@@ -1087,7 +1087,30 @@ ul {
 	}
 }
 
-/* Showcase */
+/* Test */
+
+.test {
+	overflow: hidden;
+	position: relative;
+}
+
+.test__block {
+	position: absolute;
+	width: 100%;
+	top: 0;
+	left: 0;
+	transform: translateX(100%);
+	transition: .3s;
+}
+
+.test__block.active {
+	transform: translateX(0);
+}
+
+.test__block.hidden {
+	transform: translateX(-100%);
+}
+
 .wrapper {
 	margin-top: 140px;
 	margin-bottom: 140px;
@@ -1156,7 +1179,6 @@ ul {
 .steps {
 	font-family: 'Rubik';
 	text-align: center;
-	margin-top: 90px;
 }
 
 .steps__wrapper {
@@ -1243,6 +1265,12 @@ ul {
 	cursor: not-allowed;
 	pointer-events: none;
 	margin: 0 auto;
+}
+
+.steps__btn.active {
+	background: #0041A1;
+	cursor: pointer;
+	pointer-events: all;
 }
 
 @media only screen and (max-width: 767px) {

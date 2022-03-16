@@ -244,3 +244,133 @@ $(function () {
 		return false
 	})
 })
+
+
+// === TEST ===
+
+// START
+
+const toTwoLengthNumber = (number) => {
+	return (number < 10 ? '0' : '') + number
+}
+
+const coinsResult = {
+	nft: 0,
+	eth: 0,
+	doge: 0,
+	btc: 0,
+	brtr: 0,
+	bnb: 0
+}
+
+const questions = [
+	["Я почти всегда нахожусь в хорошем настроении.", "doge"],
+	["Мой образ в одежде непременно должен отражать мою уникальность.", "nft"],
+	["Я комфортнее чувствую себя в уединении, нежели в обществе.", "eth"],
+	["Я люблю быть в центре внимания.", "nft"],
+	["Я могу проводить много времени “в себе”, не замечая ничего вокруг.", "eth"],
+	["Я четко понимаю, в каком направлении двигаться.", "brtr"],
+	["Я не вижу смысла в эмоциональной суете, так как она мешает логически мыслить.", "eth"],
+	["Люблю, когда мои труды оцениваются по достоинству,  но сам предпочитаю оставаться в тени.", "btc"],
+	["Не стремлюсь погружаться в чужие проблемы, зато могу разрядить обстановку", "doge"],
+	["Неважно, что обо мне говорят. Главное, что говорят.", "nft"],
+	["Я имею достаточно сильное влияние на других людей и получаю от этого удовольствие.", "bnb"],
+	["Мне не просто установить эмоциональную связь с кем-либо.", "eth"],
+	["Если кто-то рядом грустит меня тянет его развеселить.", "doge"],
+	["Большую часть времени я нахожусь на “своей волне”.", "eth"],
+	["Постоянно меняю свои увлечения, потому что главное для меня - яркая эмоция.", "doge"],
+	["Я умею произвести впечатление на публику.", "nft"],
+	["Вижу слабые места других, не стесняюсь им об этом говорить.", "bnb"],
+	["Я не щедр на чувства, но зато точно могу показать свое отношение делом.", "brtr"],
+	["Я достаточно консервативный человек, но это помогает мне чувствовать себя в безопасности", "btc"],
+	["Стараюсь сразу оценивать риски, но в целом могу адаптироваться к незапланированным обстоятельствам, так как четко вижу цель.", "brtr"],
+	["Генерируя что-то новое, я продумываю сразу все до мелочей и учитываю все риски.", "btc"],
+	["В компании могу быть не в центре внимания, но всегда буду ее “душой”.", "doge"],
+	["Стараюсь не выделяться среди других, так как лишнее внимание может навредить.", "btc"],
+	["Не люблю признавать свои ошибки или просить прощения - это ниже чувства моего достоинства.", "bnb"],
+	["Вижу цель - иду к ней - это про меня.", "brtr"],
+	["Несовершенство других людей меня раздражает.", "bnb"],
+	["Я предпочитаю следовать четкому, изначально намеченному плану.", "btc"],
+	["Не трачу время и силы на сантименты, так как не вижу в этом пользы.", "brtr"],
+	["Люблю говорить о себе, но не ради внимания, а чтобы люди понимали, насколько я ценен для общества.", "bnb"],
+	["Мне становится неуютно, когда большую часть внимания обращают на кого-то другого.", "nft"]
+]
+
+let stage = 0;
+
+const testWrapper = document.querySelector(".test");
+const startBtn = document.querySelector(".hero__btn");
+const stageWrappers = document.querySelectorAll(".test__block");
+
+const stageCounterFull = document.querySelector(".steps__counter-full");
+const stageCounterCurrent = document.querySelector(".steps__counter-current");
+stageCounterCurrent.innerHTML = toTwoLengthNumber(stage + 1);
+stageCounterFull.innerHTML = questions.length;
+
+testWrapper.style.height = `${stageWrappers[stage].offsetHeight}px`;
+
+startBtn.addEventListener('click', () => {
+	stageWrappers[stage].classList.add("hidden");
+	stageWrappers[stage + 1].classList.add("active");
+	testWrapper.style.height = `${stageWrappers[stage + 1].offsetHeight}px`;
+});
+
+// END START
+
+
+// STEPS
+
+function typeText(text, elem) {  
+	let line = 0;
+	let count = 0;
+	let out = '';
+	let htmlOut = document.querySelector(elem);
+	function typeLine() {
+		let interval = setTimeout(function(){
+			out += text[line][count];
+			htmlOut.innerHTML = out;
+			count++;
+			if (count >= text[line].length) {
+				count = 0;
+				line++;
+				if (line == text.length) {
+					clearTimeout(interval);
+					return true;
+				}
+			}
+			typeLine();
+		}, 5);
+	}
+	typeLine();
+}
+
+const stepsBtn = document.querySelector(".steps__btn");
+const answerOptions = document.querySelectorAll(".steps__step-item");
+const answerOptionsPoints = [3, 1, -1];
+let currentAnswer;
+
+for (let i = 0; i < answerOptions.length; i += 1) {
+	answerOptions[i].addEventListener('click', () => {
+		for (answer of answerOptions) {
+			answer.classList.remove('active');
+		}
+		answerOptions[i].classList.add("active");
+		currentAnswer = answerOptionsPoints[i];
+		stepsBtn.classList.add('active');
+	});
+}
+
+stepsBtn.addEventListener('click', () => {
+	coinsResult[questions[stage][1]] += currentAnswer;
+	stage += 1;
+	stageCounterCurrent.innerHTML = toTwoLengthNumber(stage);
+	typeText(questions[stage][0], '.steps__title');
+	stepsBtn.classList.remove('active');
+	for (answer of answerOptions) {
+		answer.classList.remove('active');
+	}
+	console.log(coinsResult);
+	stepsBtn.innerHTML = JSON.stringify(coinsResult);
+});
+
+// END STEPS
