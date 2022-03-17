@@ -254,6 +254,11 @@ const toTwoLengthNumber = (number) => {
 	return (number < 10 ? '0' : '') + number
 }
 
+const getWinnerCoin = (coins) => {
+		const maxValue = Math.max.apply(null, Object.values(coins))
+		return Object.keys(coins).filter(coin => coins[coin] === maxValue)
+}
+
 const coinsResult = {
 	nft: 0,
 	eth: 0,
@@ -267,34 +272,80 @@ const questions = [
 	["Я почти всегда нахожусь в хорошем настроении.", "doge"],
 	["Мой образ в одежде непременно должен отражать мою уникальность.", "nft"],
 	["Я комфортнее чувствую себя в уединении, нежели в обществе.", "eth"],
-	["Я люблю быть в центре внимания.", "nft"],
-	["Я могу проводить много времени “в себе”, не замечая ничего вокруг.", "eth"],
+	// ["Я люблю быть в центре внимания.", "nft"],
+	// ["Я могу проводить много времени “в себе”, не замечая ничего вокруг.", "eth"],
 	["Я четко понимаю, в каком направлении двигаться.", "brtr"],
-	["Я не вижу смысла в эмоциональной суете, так как она мешает логически мыслить.", "eth"],
+	// ["Я не вижу смысла в эмоциональной суете, так как она мешает логически мыслить.", "eth"],
 	["Люблю, когда мои труды оцениваются по достоинству,  но сам предпочитаю оставаться в тени.", "btc"],
-	["Не стремлюсь погружаться в чужие проблемы, зато могу разрядить обстановку", "doge"],
-	["Неважно, что обо мне говорят. Главное, что говорят.", "nft"],
+	// ["Не стремлюсь погружаться в чужие проблемы, зато могу разрядить обстановку", "doge"],
+	// ["Неважно, что обо мне говорят. Главное, что говорят.", "nft"],
 	["Я имею достаточно сильное влияние на других людей и получаю от этого удовольствие.", "bnb"],
-	["Мне не просто установить эмоциональную связь с кем-либо.", "eth"],
-	["Если кто-то рядом грустит меня тянет его развеселить.", "doge"],
-	["Большую часть времени я нахожусь на “своей волне”.", "eth"],
-	["Постоянно меняю свои увлечения, потому что главное для меня - яркая эмоция.", "doge"],
-	["Я умею произвести впечатление на публику.", "nft"],
-	["Вижу слабые места других, не стесняюсь им об этом говорить.", "bnb"],
-	["Я не щедр на чувства, но зато точно могу показать свое отношение делом.", "brtr"],
-	["Я достаточно консервативный человек, но это помогает мне чувствовать себя в безопасности", "btc"],
-	["Стараюсь сразу оценивать риски, но в целом могу адаптироваться к незапланированным обстоятельствам, так как четко вижу цель.", "brtr"],
-	["Генерируя что-то новое, я продумываю сразу все до мелочей и учитываю все риски.", "btc"],
-	["В компании могу быть не в центре внимания, но всегда буду ее “душой”.", "doge"],
-	["Стараюсь не выделяться среди других, так как лишнее внимание может навредить.", "btc"],
-	["Не люблю признавать свои ошибки или просить прощения - это ниже чувства моего достоинства.", "bnb"],
-	["Вижу цель - иду к ней - это про меня.", "brtr"],
-	["Несовершенство других людей меня раздражает.", "bnb"],
-	["Я предпочитаю следовать четкому, изначально намеченному плану.", "btc"],
-	["Не трачу время и силы на сантименты, так как не вижу в этом пользы.", "brtr"],
-	["Люблю говорить о себе, но не ради внимания, а чтобы люди понимали, насколько я ценен для общества.", "bnb"],
-	["Мне становится неуютно, когда большую часть внимания обращают на кого-то другого.", "nft"]
+	// ["Мне не просто установить эмоциональную связь с кем-либо.", "eth"],
+	// ["Если кто-то рядом грустит меня тянет его развеселить.", "doge"],
+	// ["Большую часть времени я нахожусь на “своей волне”.", "eth"],
+	// ["Постоянно меняю свои увлечения, потому что главное для меня - яркая эмоция.", "doge"],
+	// ["Я умею произвести впечатление на публику.", "nft"],
+	// ["Вижу слабые места других, не стесняюсь им об этом говорить.", "bnb"],
+	// ["Я не щедр на чувства, но зато точно могу показать свое отношение делом.", "brtr"],
+	// ["Я достаточно консервативный человек, но это помогает мне чувствовать себя в безопасности", "btc"],
+	// ["Стараюсь сразу оценивать риски, но в целом могу адаптироваться к незапланированным обстоятельствам, так как четко вижу цель.", "brtr"],
+	// ["Генерируя что-то новое, я продумываю сразу все до мелочей и учитываю все риски.", "btc"],
+	// ["В компании могу быть не в центре внимания, но всегда буду ее “душой”.", "doge"],
+	// ["Стараюсь не выделяться среди других, так как лишнее внимание может навредить.", "btc"],
+	// ["Не люблю признавать свои ошибки или просить прощения - это ниже чувства моего достоинства.", "bnb"],
+	// ["Вижу цель - иду к ней - это про меня.", "brtr"],
+	// ["Несовершенство других людей меня раздражает.", "bnb"],
+	// ["Я предпочитаю следовать четкому, изначально намеченному плану.", "btc"],
+	// ["Не трачу время и силы на сантименты, так как не вижу в этом пользы.", "brtr"],
+	// ["Люблю говорить о себе, но не ради внимания, а чтобы люди понимали, насколько я ценен для общества.", "bnb"],
+	// ["Мне становится неуютно, когда большую часть внимания обращают на кого-то другого.", "nft"]
 ]
+
+// EXTRA QUESTIONS
+const extraQuestions = [
+	["Закрываюсь, ухожу в себя, в свои мысли - там все понятно и спокойно.", "eth"],
+	["Пытаюсь с разных сторон (часто эмоционально) показать свою точку зрения, чтобы человек понял, что я чувствую. Где-то даже могу утрировать, чтобы пробить черствость оппонента.", "nft"],
+	["Стараюсь отшутиться, чтобы нейтрализовать конфликт или пытаюсь сменить тему", "doge"],
+	["Нервничаю, поскольку рискую выйти из зоны комфорта. Привычный порядок может нарушиться в результате конфликта", "btc"],
+	["Как правило искренне не понимаю, почему со мной не согласны, ведь моя позиция абсолютно логична. Пытаюсь спокойно объяснить эту логику.", "brtr"],
+	["Могу сильно задеть чувства человека, потому что не могу позволить задеть себя. Здесь уж кто кого.", "bnb"]
+];
+
+const hundleExtraQuestions = (wrapper, winnerCoin) => {
+	const extraWrapper = document.querySelector(wrapper);
+	extraWrapperHtml = "";
+	extraQuestions.map((item) => {
+		if (winnerCoin.includes(item[1])) {
+			extraWrapperHtml += `
+			<input class="extra-input" type="radio" id="${item[1]}" name="radio">
+			<label for="${item[1]}">${item[0]}</label>
+		`;
+		}
+	})
+	extraWrapper.innerHTML = extraWrapperHtml;
+}
+
+const extraBtn = document.querySelector(".extra-btn");
+extraBtn.addEventListener('click', () => {
+	const inputs = document.querySelectorAll(".extra-input");
+	for (let i = 0; i < inputs.length; i += 1) {
+		if (inputs[i].checked) {
+			hundleResult([inputs[i].getAttribute("id")]);
+			loader.style.display = "flex";
+			setTimeout(() => {
+			loader.style.display = "none";
+			}, 1000);
+			stageWrappers[2].classList.add("hidden");
+			stageWrappers[3].classList.add("active");
+			testWrapper.style.height = `${stageWrappers[3].offsetHeight}px`;
+		}
+	}
+});
+// END EXTRA QUESTIONS
+
+const hundleResult = (winnerCoin) => {
+	document.querySelector(`.result__wrapper.${winnerCoin[0]}`).classList.remove("hidden");
+};
 
 let stage = 0;
 
@@ -307,12 +358,12 @@ const stageCounterCurrent = document.querySelector(".steps__counter-current");
 stageCounterCurrent.innerHTML = toTwoLengthNumber(stage + 1);
 stageCounterFull.innerHTML = questions.length;
 
-testWrapper.style.height = `${stageWrappers[stage].offsetHeight}px`;
+testWrapper.style.height = `${stageWrappers[0].offsetHeight}px`;
 
 startBtn.addEventListener('click', () => {
-	stageWrappers[stage].classList.add("hidden");
-	stageWrappers[stage + 1].classList.add("active");
-	testWrapper.style.height = `${stageWrappers[stage + 1].offsetHeight}px`;
+	stageWrappers[0].classList.add("hidden");
+	stageWrappers[1].classList.add("active");
+	testWrapper.style.height = `${stageWrappers[1].offsetHeight}px`;
 });
 
 // END START
@@ -344,6 +395,7 @@ function typeText(text, elem) {
 	typeLine();
 }
 
+const loader = document.querySelector(".loader");
 const stepsBtn = document.querySelector(".steps__btn");
 const answerOptions = document.querySelectorAll(".steps__step-item");
 const answerOptionsPoints = [3, 1, -1];
@@ -361,16 +413,40 @@ for (let i = 0; i < answerOptions.length; i += 1) {
 }
 
 stepsBtn.addEventListener('click', () => {
-	coinsResult[questions[stage][1]] += currentAnswer;
-	stage += 1;
-	stageCounterCurrent.innerHTML = toTwoLengthNumber(stage);
-	typeText(questions[stage][0], '.steps__title');
+	if (stage !== questions.length - 1) {
+		coinsResult[questions[stage][1]] += currentAnswer;
+		stage += 1;
+		stageCounterCurrent.innerHTML = toTwoLengthNumber(stage + 1);
+		typeText(questions[stage][0], '.steps__title');
+		console.log(coinsResult);
+		console.log(getWinnerCoin(coinsResult));
+	} else  if (getWinnerCoin(coinsResult).length > 1) {
+		coinsResult[questions[stage][1]] += currentAnswer;
+		hundleExtraQuestions('.extra-wrapper', getWinnerCoin(coinsResult));
+		stageWrappers[1].classList.add("hidden");
+		stageWrappers[2].classList.add("active");
+		testWrapper.style.height = `${stageWrappers[2].offsetHeight}px`;
+	} else {
+		coinsResult[questions[stage][1]] += currentAnswer;
+		hundleResult(getWinnerCoin(coinsResult));
+		loader.style.display = "flex";
+		setTimeout(() => {
+		loader.style.display = "none";
+		}, 1000);
+		stageWrappers[1].classList.add("hidden");
+		stageWrappers[3].classList.add("active");
+		testWrapper.style.height = `${stageWrappers[3].offsetHeight}px`;
+	}
 	stepsBtn.classList.remove('active');
 	for (answer of answerOptions) {
 		answer.classList.remove('active');
 	}
-	console.log(coinsResult);
-	stepsBtn.innerHTML = JSON.stringify(coinsResult);
+	// stepsBtn.innerHTML = JSON.stringify(coinsResult);
 });
 
 // END STEPS
+
+
+// RESULT
+
+// END RESULT

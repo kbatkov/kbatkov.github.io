@@ -1380,6 +1380,16 @@ ul {
 	background: #fff;
 }
 
+.extra-btn {
+	margin: 0 auto;
+	display: flex;
+	font-family: 'Rubik';
+	padding: 0;
+	height: 58px;
+	width: 261px;
+	margin-top: 70px;
+}
+
 @media only screen and (max-width: 767px) {
 	.extra label {
 		padding: 25px 23px 25px 77px;
@@ -1395,11 +1405,15 @@ ul {
 }
 
 
-.result {
+.result__wrapper {
 	font-family: 'Rubik';
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	grid-template-rows: repeat(4, 1fr);
+}
+
+.result__wrapper.hidden {
+	display: none;
 }
 
 .result__img {
@@ -1413,7 +1427,8 @@ ul {
 .result__img-text {
 	position: absolute;
 	top: -42px;
-	left: -10px;
+	left: 50%;
+  transform: translateX(-50%);
 	color: #3660CD;
 	font-weight: 700;
 	font-size: 200px;
@@ -1422,7 +1437,8 @@ ul {
 .result__img-img {
 	position: absolute;
 	top: 0;
-	left: 0;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .result__hero {
