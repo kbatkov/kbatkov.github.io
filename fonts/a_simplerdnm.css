@@ -1,9 +1,0 @@
-@font-face {
-	font-family: 'a_SimplerDnm';
-	src: url('../fonts/a_simplerdnm.eot'); /* IE 9 Compatibility Mode */
-	src: url('../fonts/a_simplerdnm.eot?#iefix') format('embedded-opentype'), /* IE < 9 */
-		url('../fonts/a_simplerdnm.woff2') format('woff2'), /* Super Modern Browsers */
-		url('../fonts/a_simplerdnm.woff') format('woff'), /* Firefox >= 3.6, any other modern browser */
-		url('../fonts/a_simplerdnm.ttf') format('truetype'), /* Safari, Android, iOS */
-		url('../fonts/a_simplerdnm.svg#a_simplerdnm') format('svg'); /* Chrome < 4, Legacy iOS */
-}
